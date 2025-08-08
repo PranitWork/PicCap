@@ -46,7 +46,7 @@ const Header = () => {
         <nav className="hidden items-center sm:flex space-x-6">
        
           <Link
-            to="/auth"
+            to="/login"
             className="bg-white text-black px-4 py-2 rounded font-semibold hover:bg-gray-300 transition"
           >
             Get Started
@@ -59,7 +59,7 @@ const Header = () => {
         <div className="sm:hidden mt-4 space-y-4">
          
           <Link
-            to="/auth"
+            to="/login"
             className="block bg-white text-black px-4 py-2 rounded font-semibold hover:bg-gray-300 transition"
           >
             Get Started
