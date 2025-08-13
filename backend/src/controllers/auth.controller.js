@@ -30,7 +30,8 @@ async function registerController(req, res) {
       expiresIn: "1d",
     });
 
-    res.cookie("token", token, { httpOnly: true, secure: true }); // optional: secure flags
+    res.cookie("token", token, { httpOnly: true, secure: true, sameSite: "none",   // required for cross-site cookies
+    maxAge: 24 * 60 * 60 * 1000 }); // optional: secure flags
     const userToReturn = newUser.toObject();
     delete userToReturn.password;
 
@@ -58,7 +59,8 @@ async function loginController(req, res) {
     res.cookie("token", token,{
     httpOnly: true,
     secure: false,        // set to true in production (HTTPS)
-    sameSite: 'Lax',      // use 'None' if cross-domain and secure: true
+    sameSite: 'none', 
+    maxAge: 24 * 60 * 60 * 1000     
   });
     res.status(200).json({ message: "Login successful", user: user.toObject() });
   }catch(err){

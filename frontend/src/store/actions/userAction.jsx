@@ -3,7 +3,12 @@ import { loadusers } from "../../store/reducers/UserReducer"; // ✅ Replace wit
 
 export const asyncCurrentUser = () => async (dispatch) => {
   try {
-    const response = await axios.post("/api/current-user");
+    const response = await axios.post(
+      "/api/current-user",
+      {},
+      { withCredentials: true } // ✅ send cookies
+    );
+
     if (response.data) {
       dispatch(loadusers(response.data.user)); 
       return true;
@@ -13,8 +18,10 @@ export const asyncCurrentUser = () => async (dispatch) => {
     }
   } catch (err) {
     console.error("Error fetching current user:", err);
+    return false;
   }
 };
+
 
 export const asyncregisteruser = (data) => async (dispatch) => {
   try {
