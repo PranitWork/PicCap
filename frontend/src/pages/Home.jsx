@@ -18,11 +18,11 @@ const Home = () => {
               Start Now
             </button>
           </Link>
-          <a href="#features">
+          <Link to="/process">
             <button className="px-8 py-3 rounded border border-white text-white font-semibold hover:bg-white hover:text-gray-900 transition duration-200">
               Explore Features
             </button>
-          </a>
+          </Link>
         </div>
       </section>
 
