@@ -55,7 +55,11 @@ async function loginController(req, res) {
       return res.status(400).json({ message: "Invalid password" });
     }
     const token = jwt.sign({id: user._id}, process.env.JWT_SECRET, { expiresIn: "1d" });
-    res.cookie("token", token);
+    res.cookie("token", token,{
+    httpOnly: true,
+    secure: false,        // set to true in production (HTTPS)
+    sameSite: 'Lax',      // use 'None' if cross-domain and secure: true
+  });
     res.status(200).json({ message: "Login successful", user: user.toObject() });
   }catch(err){
     res.status(500).json({ message: "Server error" });

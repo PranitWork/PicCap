@@ -1,16 +1,27 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { useForm } from "react-hook-form";
+import { Link, useNavigate } from "react-router-dom";
+import { asyncregisteruser } from "../store/actions/userAction";
+import { useDispatch } from "react-redux";
 
 const RegisterPage = () => {
-  const [form, setForm] = useState({ username: "", email: "", password: "" });
 
-  const handleChange = (e) => {
-    setForm({ ...form, [e.target.name]: e.target.value });
-  };
+  const {register, handleSubmit, reset} = useForm();
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+   const [error, setError] = useState("");
 
-  const handleRegister = () => {
-    console.log("Registering with:", form);
-    // TODO: Add register logic
+  const registerHandler = async (data) => {
+    const result = await dispatch(asyncregisteruser(data));
+
+    if (result.success) {
+      setError("");
+      setTimeout(() => navigate("/"), 1500); // Redirect after delay
+    } else {
+      setError(result.message);
+      alert(error);
+    }
+    reset();
   };
 
   return (
@@ -18,33 +29,33 @@ const RegisterPage = () => {
       <div className="w-full max-w-md bg-gray-800 rounded-xl shadow-xl p-8">
         <h1 className="text-3xl font-bold text-white text-center mb-6">Register on PicCap</h1>
 
-        <form className="space-y-4" onSubmit={(e) => e.preventDefault()}>
+        <form method="post" className="space-y-4" onSubmit={handleSubmit(registerHandler)}>
           <input
             type="text"
             name="username"
             placeholder="Username"
-            value={form.username}
-            onChange={handleChange}
+            {...register("username", { required: true })}
+            required
             className="w-full px-4 py-2 rounded bg-gray-700 text-white border border-gray-600 focus:outline-none focus:ring-2 focus:ring-white"
           />
           <input
             type="email"
             name="email"
             placeholder="Email"
-            value={form.email}
-            onChange={handleChange}
+            {...register("email", { required: true })}
+            required
             className="w-full px-4 py-2 rounded bg-gray-700 text-white border border-gray-600 focus:outline-none focus:ring-2 focus:ring-white"
           />
           <input
             type="password"
             name="password"
             placeholder="Password"
-            value={form.password}
-            onChange={handleChange}
+            required
+            {...register("password", { required: true })}
             className="w-full px-4 py-2 rounded bg-gray-700 text-white border border-gray-600 focus:outline-none focus:ring-2 focus:ring-white"
           />
           <button
-            onClick={handleRegister}
+            type="submit"
             className="w-full bg-white text-gray-900 font-semibold py-2 rounded hover:bg-gray-300 transition duration-200"
           >
             Register

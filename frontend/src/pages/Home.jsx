@@ -13,7 +13,7 @@ const Home = () => {
           Your smart AI assistant that instantly generates engaging and relevant image captions to tell your story better.
         </p>
         <div className="flex flex-col md:flex-row space-y-4 md:space-y-0 md:space-x-4">
-          <Link to="/auth">
+          <Link to="/process">
             <button className="px-8 py-3 rounded bg-white text-gray-900 font-bold hover:bg-gray-300 transition duration-200">
               Start Now
             </button>
